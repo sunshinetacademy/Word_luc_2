@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الثانية — تنسيق البحوث والتقارير</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fdfaf3;
+    --ink:#2b2622;
+    --ink-soft:#6b625a;
+    --rule:#d8cfc2;
+    --accent:#b5542a;
+    --accent-2:#2f5d50;
+    --tag-bg:#f1ece1;
+    --code-bg:#2b2622;
+    --code-text:#f1ece1;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Cairo', sans-serif;
+    line-height:1.9;
+    font-size:17px;
+  }
+
+  .wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:40px 28px 80px;
+  }
+
+  /* ===== Header / cover ===== */
+  header.cover{
+    border:3px solid var(--ink);
+    border-radius:4px;
+    padding:36px 28px;
+    margin-bottom:32px;
+    position:relative;
+    background:
+      repeating-linear-gradient(135deg, transparent 0 28px, rgba(181,84,42,0.04) 28px 56px);
+  }
+  header.cover .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+  }
+  header.cover h1{
+    font-size:clamp(28px, 5vw, 44px);
+    margin:10px 0 6px;
+    font-weight:900;
+  }
+  header.cover .sub{
+    color:var(--ink-soft);
+    font-size:16px;
+  }
+  .stamp{
+    position:absolute;
+    top:24px;
+    left:24px;
+    border:3px solid var(--accent);
+    color:var(--accent);
+    border-radius:50%;
+    width:92px;
+    height:92px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-weight:900;
+    font-size:13px;
+    line-height:1.2;
+    transform:rotate(-12deg);
+    font-family:'JetBrains Mono', monospace;
+    opacity:0.85;
+  }
+
+  /* ===== Progress bar: shows lecture 1 -> 2 link ===== */
+  .progress{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:48px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .progress .step{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 14px;
+    border-radius:20px;
+    border:1.5px solid var(--rule);
+    background:#fff;
+  }
+  .progress .step.done{
+    border-color:var(--accent-2);
+    color:var(--accent-2);
+  }
+  .progress .step.current{
+    border-color:var(--accent);
+    color:var(--accent);
+    background:var(--tag-bg);
+    font-weight:700;
+  }
+  .progress .connector{
+    flex:1;
+    height:1.5px;
+    background:var(--rule);
+    position:relative;
+  }
+  .progress .connector::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:var(--accent-2);
+    width:100%;
+  }
+
+  /* ===== Section blocks ===== */
+  section{ margin-bottom:52px; }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:18px;
+    border-bottom:3px solid var(--ink);
+    padding-bottom:8px;
+  }
+  .section-head .num{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:14px;
+    color:var(--accent);
+    border:2px solid var(--accent);
+    border-radius:50%;
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .section-head h2{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+  }
+  .section-head .why{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  p{ margin:0 0 14px; }
+
+  /* ===== Path / breadcrumb for menu locations ===== */
+  .path{
+    font-family:'JetBrains Mono', monospace;
+    background:var(--tag-bg);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    padding:8px 14px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    margin:6px 0 14px;
+    direction:ltr;
+  }
+  .path .arrow{ color:var(--accent); font-weight:700; }
+
+  /* ===== Recap box (5-min review) ===== */
+  .recap{
+    border:2px dashed var(--accent-2);
+    border-radius:10px;
+    background:#eef5f1;
+    padding:18px 20px;
+    margin:0 0 48px;
+  }
+  .recap .recap-tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    color:var(--accent-2);
+    text-transform:uppercase;
+    font-weight:700;
+    margin-bottom:8px;
+    display:block;
+  }
+  .recap ul{ margin:8px 0 0; padding-right:20px; font-size:15px; }
+  .recap li{ margin-bottom:6px; }
+
+  /* ===== Cards grid ===== */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+    margin:18px 0;
+  }
+  @media (max-width:620px){ .grid{ grid-template-columns:1fr; } }
+
+  .card{
+    border:1px solid var(--rule);
+    border-radius:10px;
+    padding:18px 20px;
+    background:#fff;
+  }
+  .card h3{
+    margin:0 0 8px;
+    font-size:17px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .card h3 .icon{ font-size:20px; }
+  .card p{ margin:0; color:var(--ink-soft); font-size:15px; }
+
+  /* ===== Step list (numbered process - genuinely sequential here) ===== */
+  .steps{
+    list-style:none;
+    margin:18px 0;
+    padding:0;
+    counter-reset:step;
+  }
+  .steps li{
+    counter-increment:step;
+    position:relative;
+    padding:14px 18px 14px 18px;
+    padding-right:56px;
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:10px;
+    margin-bottom:10px;
+    font-size:15px;
+  }
+  .steps li::before{
+    content:counter(step);
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .steps li strong{ color:var(--accent); }
+
+  /* ===== Highlight callout (selling point) ===== */
+  .callout{
+    background:var(--code-bg);
+    color:var(--code-text);
+    border-radius:10px;
+    padding:20px 22px;
+    margin:18px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .callout::before{
+    content:'★';
+    position:absolute;
+    left:-10px;
+    top:-10px;
+    font-size:80px;
+    color:rgba(245,197,24,0.08);
+  }
+  .callout .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:#f5c518;
+    margin-bottom:8px;
+    display:block;
+  }
+  .callout p{ margin:0; color:var(--code-text); font-size:15px; }
+
+  /* ===== TOC mock diagram ===== */
+  .diagram{
+    border:1px solid var(--rule);
+    border-radius:10px;
+    background:#fff;
+    padding:24px;
+    margin:18px 0;
+  }
+  .toc-mock{
+    max-width:380px;
+    margin:0 auto;
+    border:2px solid var(--ink);
+    border-radius:4px;
+    padding:20px 24px;
+    background:#fff;
+    box-shadow:6px 6px 0 var(--tag-bg);
+  }
+  .toc-mock .toc-title{
+    text-align:center;
+    font-weight:700;
+    font-size:14px;
+    margin-bottom:14px;
+    color:var(--ink-soft);
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:1px;
+  }
+  .toc-row{
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+    margin-bottom:10px;
+    font-size:14px;
+  }
+  .toc-row .dots{
+    flex:1;
+    border-bottom:1.5px dotted var(--rule);
+    height:1px;
+    margin-bottom:3px;
+  }
+  .toc-row .pg{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--accent);
+    font-weight:700;
+  }
+  .toc-row.h1{ font-weight:700; color:var(--accent-2); }
+  .toc-row.h2{ padding-right:18px; color:var(--ink-soft); }
+
+  /* ===== Page anatomy with header/footer ===== */
+  .page-mock{
+    width:220px;
+    margin:0 auto;
+    border:2px solid var(--ink);
+    border-radius:4px;
+    background:#fff;
+    position:relative;
+    aspect-ratio:1/1.41;
+    box-shadow:6px 6px 0 var(--tag-bg);
+  }
+  .page-mock .header-zone{
+    position:absolute;
+    top:6%; left:10%; right:10%;
+    height:8%;
+    border-bottom:1.5px dashed var(--accent);
+    display:flex;
+    align-items:center;
+    font-size:8px;
+    font-family:'JetBrains Mono', monospace;
+    color:var(--accent);
+  }
+  .page-mock .footer-zone{
+    position:absolute;
+    bottom:5%; left:10%; right:10%;
+    height:7%;
+    border-top:1.5px dashed var(--accent-2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:8px;
+    font-family:'JetBrains Mono', monospace;
+    color:var(--accent-2);
+  }
+  .page-mock .body-line{
+    position:absolute;
+    left:18%; right:18%;
+    height:5px;
+    background:var(--rule);
+    border-radius:2px;
+  }
+  .page-mock .body-line.b1{ top:24%; }
+  .page-mock .body-line.b2{ top:31%; right:30%; }
+  .page-mock .body-line.b3{ top:38%; }
+  .page-mock .body-line.b4{ top:45%; right:35%; }
+  .page-mock .body-line.b5{ top:52%; }
+
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    justify-content:center;
+    margin-top:18px;
+    font-size:14px;
+  }
+  .legend-item{ display:flex; align-items:center; gap:8px; }
+  .legend-swatch{ width:16px; height:16px; border-radius:3px; flex-shrink:0; }
+
+  /* ===== Shortcut table ===== */
+  table.shortcuts{
+    width:100%;
+    border-collapse:collapse;
+    margin:16px 0;
+    font-size:15px;
+  }
+  table.shortcuts th{
+    text-align:right;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-bottom:2px solid var(--ink);
+    padding:8px 10px;
+  }
+  table.shortcuts td{
+    padding:12px 10px;
+    border-bottom:1px solid var(--rule);
+  }
+  table.shortcuts tr:hover{ background:var(--tag-bg); }
+  .key{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    background:var(--code-bg);
+    color:var(--code-text);
+    padding:4px 10px;
+    border-radius:5px;
+    font-size:13px;
+    direction:ltr;
+    font-weight:600;
+  }
+
+  /* ===== Warning box (common mistake) ===== */
+  .warning{
+    border-right:4px solid var(--accent);
+    background:#fdf1ee;
+    border-radius:0 8px 8px 0;
+    padding:14px 18px;
+    margin:18px 0;
+    font-size:15px;
+  }
+  .warning .w-tag{
+    font-weight:700;
+    color:var(--accent);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:1px;
+    display:block;
+    margin-bottom:4px;
+  }
+
+  /* ===== Vocabulary glossary ===== */
+  dl.glossary{ margin:0; border-top:1px solid var(--rule); }
+  dl.glossary > div{
+    display:grid;
+    grid-template-columns:160px 1fr;
+    gap:16px;
+    padding:14px 4px;
+    border-bottom:1px solid var(--rule);
+    align-items:start;
+  }
+  @media (max-width:620px){
+    dl.glossary > div{ grid-template-columns:1fr; gap:4px; }
+  }
+  dl.glossary dt{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:14px;
+    color:var(--accent);
+    direction:ltr;
+    text-align:left;
+  }
+  dl.glossary dd{ margin:0; font-size:15px; color:var(--ink); }
+
+  /* ===== Checklist / homework ===== */
+  .checklist{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    gap:10px;
+  }
+  .checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:12px 14px;
+    font-size:15px;
+  }
+  .checklist .box{
+    width:20px; height:20px;
+    border:2px solid var(--accent-2);
+    border-radius:4px;
+    flex-shrink:0;
+    margin-top:2px;
+  }
+
+  /* ===== Footer ===== */
+  footer{
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:13px;
+    margin-top:60px;
+    padding-top:20px;
+    border-top:1px solid var(--rule);
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:1px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="cover">
+    <div class="stamp">نقطة<br>البيع</div>
+    <div class="eyebrow">Sunshine T Academy — Word Skills</div>
+    <h1>المحاضرة الثانية<br>تنسيق البحوث والتقارير</h1>
+    <div class="sub">فهرس تلقائي، ترقيم صفحات، Header & Footer — ورقة مراجعة شاملة</div>
+  </header>
+
+  <div class="progress">
+    <div class="step done">١ — الأساسيات ✓</div>
+    <div class="connector"></div>
+    <div class="step current">٢ — البحوث والتقارير</div>
+    <div class="connector"></div>
+    <div class="step">٣ — الجداول والقوائم</div>
+  </div>
+
+  <!-- Recap -->
+  <div class="recap">
+    <span class="recap-tag">مراجعة سريعة (٥ دقايق) قبل البدء</span>
+    <p style="margin-bottom:0">اللي اتعلمناه المحاضرة اللي فاتت هو السبب الوحيد إن اللي هنعمله النهاردة هيشتغل تلقائي:</p>
+    <ul>
+      <li>الفرق بين <strong>Heading 1 / Heading 2</strong> و <strong>Normal</strong></li>
+      <li>إزاي تطبّقي ستايل من <span class="path" style="margin:0">Home <span class="arrow">→</span> Styles Gallery</span></li>
+    </ul>
+  </div>
+
+  <!-- 1. Why this lecture matters -->
+  <section>
+    <div class="section-head">
+      <div class="num">1</div>
+      <h2>ليه المحاضرة دي هي "الجايزة"</h2>
+    </div>
+    <div class="callout">
+      <span class="label">الفكرة الأساسية</span>
+      <p>كل اللي هنعمله النهاردة (فهرس تلقائي، تنظيم الصفحات) بيعتمد بالكامل على الـ Styles اللي اتعلمناها المحاضرة اللي فاتت. من غيرها، Word مش هيعرف "يفهم" هيكل البحث.</p>
+    </div>
+  </section>
+
+  <!-- 2. Document structure -->
+  <section>
+    <div class="section-head">
+      <div class="num">2</div>
+      <h2>هيكلة بحث متعدد الصفحات</h2>
+    </div>
+    <p>نفتح ملف فيه عدة فصول وهمية، ونطبّق الـ Styles بشكل يخلي Word "يفهم" تسلسل المستند.</p>
+
+    <ol class="steps">
+      <li>طبّقي <strong>Heading 1</strong> على عنوان كل فصل رئيسي</li>
+      <li>طبّقي <strong>Heading 2</strong> على العناوين الفرعية داخل كل فصل</li>
+      <li>اتركي نص الفقرات بستايل <strong>Normal</strong> كالمعتاد</li>
+      <li>كرري نفس الخطوات على فصل جديد بنفسك كتمرين</li>
+    </ol>
+  </section>
+
+  <!-- 3. TOC -->
+  <section>
+    <div class="section-head">
+      <div class="num">3</div>
+      <h2>الفهرس التلقائي (Table of Contents)</h2>
+      <span class="why">نقطة البيع الأساسية</span>
+    </div>
+
+    <div class="path">References <span class="arrow">→</span> Table of Contents <span class="arrow">→</span> Automatic Table</div>
+
+    <div class="diagram">
+      <div class="toc-mock">
+        <div class="toc-title">المحتويات</div>
+        <div class="toc-row h1"><span>الفصل الأول: المقدمة</span><span class="dots"></span><span class="pg">١</span></div>
+        <div class="toc-row h2"><span>١.١ تعريف الموضوع</span><span class="dots"></span><span class="pg">٢</span></div>
+        <div class="toc-row h2"><span>١.٢ أهمية البحث</span><span class="dots"></span><span class="pg">٣</span></div>
+        <div class="toc-row h1"><span>الفصل الثاني: الإطار النظري</span><span class="dots"></span><span class="pg">٥</span></div>
+        <div class="toc-row h2"><span>٢.١ الدراسات السابقة</span><span class="dots"></span><span class="pg">٦</span></div>
+      </div>
+    </div>
+
+    <div class="warning">
+      <span class="w-tag">أكتر غلطة بتحصل</span>
+      نسيان تحديث الفهرس بعد أي تعديل في المستند. الحل: دوسي على الفهرس <span class="key" style="margin:0 4px">F9</span> أو يمين الماوس واختاري <strong>Update Field</strong>.
+    </div>
+  </section>
+
+  <!-- 4. Page numbers -->
+  <section>
+    <div class="section-head">
+      <div class="num">4</div>
+      <h2>ترقيم الصفحات</h2>
+    </div>
+
+    <div class="path">Insert <span class="arrow">→</span> Page Number <span class="arrow">→</span> Bottom of Page</div>
+
+    <div class="grid">
+      <div class="card">
+        <h3><span class="icon">🔢</span> الشكل القياسي</h3>
+        <p>أرقام عادية في أسفل الصفحة، أو بصيغة "صفحة X من Y" حسب طلب الكلية.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">📋</span> Different First Page</h3>
+        <p>لو صفحة الغلاف لازم تكون من غير رقم — الخيار ده موجود في Header & Footer Tools.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Header & Footer -->
+  <section>
+    <div class="section-head">
+      <div class="num">5</div>
+      <h2>Header و Footer</h2>
+    </div>
+    <p>محتوى ثابت بيتكرر في كل صفحة تلقائياً — زي اسم الباحث وعنوان البحث.</p>
+
+    <div class="path">Insert <span class="arrow">→</span> Header / Footer</div>
+
+    <div class="diagram">
+      <div class="page-mock">
+        <div class="header-zone">اسم الطالبة — عنوان البحث</div>
+        <div class="body-line b1"></div>
+        <div class="body-line b2"></div>
+        <div class="body-line b3"></div>
+        <div class="body-line b4"></div>
+        <div class="body-line b5"></div>
+        <div class="footer-zone">١</div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-swatch" style="background:transparent;border:1.5px dashed var(--accent)"></div> Header — يتكرر فوق كل صفحة</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:transparent;border:1.5px dashed var(--accent-2)"></div> Footer — يتكرر تحت كل صفحة</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Shortcuts -->
+  <section>
+    <div class="section-head">
+      <div class="num">6</div>
+      <h2>الاختصارات (Shortcuts)</h2>
+    </div>
+    <table class="shortcuts">
+      <thead>
+        <tr><th>الاختصار</th><th>الوظيفة</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="key">F9</span></td><td>تحديث الفهرس أو الحقول (Update Field)</td></tr>
+        <tr><td><span class="key">Ctrl + Alt + 1</span></td><td>تطبيق Heading 1</td></tr>
+        <tr><td><span class="key">Ctrl + Alt + 2</span></td><td>تطبيق Heading 2</td></tr>
+        <tr><td><span class="key">Ctrl + Enter</span></td><td>إدراج فاصل صفحة (Page Break)</td></tr>
+        <tr><td><span class="key">Alt + Shift + O</span></td><td>وضع علامة في الفهرس يدوياً</td></tr>
+        <tr><td><span class="key">Ctrl + S</span></td><td>حفظ الملف</td></tr>
+        <tr><td><span class="key">Ctrl + Z</span></td><td>تراجع (Undo)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 7. Glossary -->
+  <section>
+    <div class="section-head">
+      <div class="num">7</div>
+      <h2>قاموس المصطلحات</h2>
+    </div>
+    <dl class="glossary">
+      <div>
+        <dt>Table of Contents</dt>
+        <dd>الفهرس التلقائي — قائمة بعناوين المستند مع أرقام صفحاتها، يتولد ويتحدث تلقائياً بناءً على الـ Heading Styles.</dd>
+      </div>
+      <div>
+        <dt>Update Field</dt>
+        <dd>أمر بيحدّث محتوى عنصر تلقائي (فهرس، رقم صفحة) بعد أي تعديل في المستند.</dd>
+      </div>
+      <div>
+        <dt>Header</dt>
+        <dd>منطقة ثابتة فوق كل صفحة، بتتكرر تلقائياً في المستند كله.</dd>
+      </div>
+      <div>
+        <dt>Footer</dt>
+        <dd>منطقة ثابتة تحت كل صفحة، بتتكرر تلقائياً — غالباً بتحتوي على رقم الصفحة.</dd>
+      </div>
+      <div>
+        <dt>Page Break</dt>
+        <dd>أمر بيخلي الكتابة تبدأ من صفحة جديدة فوراً، بدل ما تنتظر امتلاء الصفحة الحالية.</dd>
+      </div>
+      <div>
+        <dt>Different First Page</dt>
+        <dd>خيار بيسمح إن صفحة الغلاف تختلف في الـ Header/Footer عن باقي الصفحات (مثلاً من غير رقم صفحة).</dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- 8. Homework -->
+  <section>
+    <div class="section-head">
+      <div class="num">8</div>
+      <h2>الواجب البيتي</h2>
+    </div>
+    <ul class="checklist">
+      <li><div class="box"></div> بحث وهمي (أو حقيقي) من 4 فصول على الأقل بـ Heading Styles مطبقة بشكل صحيح</li>
+      <li><div class="box"></div> فهرس تلقائي في أول الصفحة، شغال ومحدّث (Update Field)</li>
+      <li><div class="box"></div> ترقيم صفحات كامل، مع استبعاد صفحة الغلاف من الترقيم</li>
+      <li><div class="box"></div> Header فيه الاسم وعنوان البحث، Footer فيه رقم الصفحة</li>
+    </ul>
+  </section>
+
+  <footer>
+    SUNSHINE T ACADEMY — WORD SKILLS — LECTURE 02 — REVIEW SHEET
+  </footer>
+
+</div>
+</body>
+</html>
